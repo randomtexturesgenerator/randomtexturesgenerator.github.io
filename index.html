@@ -1,1 +1,198 @@
-Just test
+<html>
+
+<head>
+
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<title>RandomTexturesGenerator by Nitram147</title>
+
+	<style>
+
+		body{
+			text-align: center;
+		}
+
+		button{
+			width: auto;
+			height: 2rem;
+			margin: 0.25rem;
+			border-radius: 4px;
+		}
+
+		#options_menu{
+			margin: 2rem;
+		}
+
+		#options_menu select{
+			width: auto;
+			height: 2rem;
+			font-size: 1rem;
+			padding: 0 1rem;
+			margin: 0.25rem;
+		}
+
+		#options_menu label{
+			font-size: 1rem;
+			font-weight: bold;
+		}
+
+		#options button{
+			font-size: 1rem;
+			display: block;
+		}
+
+		#save_link{
+			display: none;
+		}
+
+		#advanced_options{
+			display: none;
+			text-align: center !important;
+			max-width: 30rem;
+			margin: 0 auto;
+		}
+
+		#advanced_options input{
+			width: 5rem;
+		}
+
+		#advanced_options .sml{
+			text-align: right;
+			display: block;
+		}
+
+	</style>
+
+</head>
+
+<body>
+
+	<div id="options_menu">
+
+		<button id="pause_resume_btn">Pause</button>
+		<button id="reset_btn">Reset</button>
+		<button id="save_png_btn">Save as PNG</button>
+
+		<!-- 
+		<div>
+			Filling mode:
+			<label for="fmauto">Auto</label>
+			<input type="radio" name="filling_mode" value="auto" id="fmauto" checked>
+			<label for="fmmanual">Manual</label>
+			<input type="radio" name="filling_mode" value="manual" id="fmmanual">			
+		</div>
+		-->
+
+		<div>
+			Auto-reset canvas after filling style change
+			<label for="aryes">Yes</label>
+			<input type="radio" name="auto_reset" value="yes" id="aryes" checked>
+			<label for="arno">No</label>
+			<input type="radio" name="auto_reset" value="no" id="arno">
+		</div>
+
+		<div>
+			Rendering speed:
+			<input type="range" min="10" max="100" step="1" value="50" id="render_speed">
+		</div>
+
+		<div>
+			<label for="filling_styles">Filling style:</label>
+			<select name="filling_styles" id="filling_styles">
+
+				<option value="worms" selected>Worms</option>
+				<option value="crystals">Crystals</option>
+				<option value="lasers">Lasers</option>
+				<option value="bullets">Bullets</option>
+				<option value="boxes">Boxes</option>
+				
+			</select>		
+		</div>
+
+		<div>
+			<label for="current_color_palette">Color palette:</label>
+			<select name="current_color_palette" id="current_color_palette">
+				<!-- options are filled by javascript (typescript) -->
+			</select>
+		</div>
+
+		<button id="show_hide_options_btn">Show advanced options</button>
+
+		<div id="advanced_options">
+
+			<div class="sml">
+				Worms radius: 
+				<label for="wrm_radius_min">Min</label>
+				<input type="number" min="0.01" max="10.0" value="0.05" id="wrm_radius_min">
+				<label for="wrm_radius_max">Max</label>
+				<input type="number" min="0.01" max="10.0" value="3.00" id="wrm_radius_max">		
+			</div>
+
+			<div class="sml">
+				Worms lifetime:
+				<label for="wrm_lifetime_min">Min</label>
+				<input type="number" min="1" max="200" value="25" id="wrm_lifetime_min">
+				<label for="wrm_lifetime_max">Max</label>
+				<input type="number" min="1" max="200" value="50" id="wrm_lifetime_max">		
+			</div>
+
+			<div class="sml">
+				Crystals radius:
+				<label for="crstl_radius_min">Min</label>
+				<input type="number" min="0.01" max="10.0" value="0.05" id="crstl_radius_min">
+				<label for="crstl_radius_max">Max</label>
+				<input type="number" min="0.01" max="10.0" value="2.00" id="crstl_radius_max">		
+			</div>
+
+			<div class="sml">
+				Crystals total length: 
+				<label for="crstl_total_length_min">Min</label>
+				<input type="number" min="1" max="100" value="10" id="crstl_total_length_min">
+				<label for="crstl_total_length_max">Max</label>
+				<input type="number" min="1" max="100" value="30" id="crstl_total_length_max">		
+			</div>
+
+			<div class="sml">
+				Lasers length: 
+				<label for="lsr_length_min">Min</label>
+				<input type="number" min="1" max="200" value="30" id="lsr_length_min">
+				<label for="lsr_length_max">Max</label>
+				<input type="number" min="1" max="200" value="50" id="lsr_length_max">		
+			</div>
+
+			<div class="sml">
+				Lasers thickness: 
+				<label for="lsr_thickness_min">Min</label>
+				<input type="number" min="1" max="20" value="1" id="lsr_thickness_min">
+				<label for="lsr_thickness_max">Max</label>
+				<input type="number" min="1" max="20" value="3" id="lsr_thickness_max">		
+			</div>
+
+			<div class="sml">
+				Bullets radius:
+				<label for="blt_radius_min">Min</label>
+				<input type="number" min="0.01" max="10.0" value="0.05" id="blt_radius_min">
+				<label for="blt_radius_max">Max</label>
+				<input type="number" min="0.01" max="10.0" value="3.00" id="blt_radius_max">		
+			</div>
+
+			<div class="sml">
+				Boxes width & height limits:
+				<label for="bx_wh_min">Min</label>
+				<input type="number" min="1" max="50" value="2" id="bx_wh_min">
+				<label for="bx_wh_max">Max</label>
+				<input type="number" min="1" max="50" value="8" id="bx_wh_max">		
+			</div>
+
+		</div>
+
+		<a id="save_link"></a>
+
+	</div>
+
+	<script type="text/javascript" src="art.js"></script>
+
+</body>
+
+</html>
