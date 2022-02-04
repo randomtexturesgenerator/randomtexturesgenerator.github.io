@@ -11,6 +11,7 @@
 
 		body{
 			text-align: center;
+			margin: 0;
 		}
 
 		button{
@@ -22,6 +23,12 @@
 
 		#options_menu{
 			margin: 2rem;
+
+			position: absolute;
+			background: white;
+			margin: 0 auto;
+			padding: 3rem;
+			opacity: 0.9;
 		}
 
 		#options_menu select{
@@ -49,7 +56,7 @@
 		#advanced_options{
 			display: none;
 			text-align: center !important;
-			max-width: 30rem;
+			max-width: 50rem;
 			margin: 0 auto;
 		}
 
@@ -57,9 +64,8 @@
 			width: 5rem;
 		}
 
-		#advanced_options .sml{
-			text-align: right;
-			display: block;
+		#advanced_options td{
+			padding: 0.1rem 1rem;
 		}
 
 	</style>
@@ -73,16 +79,6 @@
 		<button id="pause_resume_btn">Pause</button>
 		<button id="reset_btn">Reset</button>
 		<button id="save_png_btn">Save as PNG</button>
-
-		<!-- 
-		<div>
-			Filling mode:
-			<label for="fmauto">Auto</label>
-			<input type="radio" name="filling_mode" value="auto" id="fmauto" checked>
-			<label for="fmmanual">Manual</label>
-			<input type="radio" name="filling_mode" value="manual" id="fmmanual">			
-		</div>
-		-->
 
 		<div>
 			Auto-reset canvas after filling style change
@@ -121,69 +117,114 @@
 
 		<div id="advanced_options">
 
-			<div class="sml">
-				Worms radius: 
-				<label for="wrm_radius_min">Min</label>
-				<input type="number" min="0.01" max="10.0" value="0.05" id="wrm_radius_min">
-				<label for="wrm_radius_max">Max</label>
-				<input type="number" min="0.01" max="10.0" value="3.00" id="wrm_radius_max">		
-			</div>
+			<table>
 
-			<div class="sml">
-				Worms lifetime:
-				<label for="wrm_lifetime_min">Min</label>
-				<input type="number" min="1" max="200" value="25" id="wrm_lifetime_min">
-				<label for="wrm_lifetime_max">Max</label>
-				<input type="number" min="1" max="200" value="50" id="wrm_lifetime_max">		
-			</div>
+			<tr>
 
-			<div class="sml">
-				Crystals radius:
-				<label for="crstl_radius_min">Min</label>
-				<input type="number" min="0.01" max="10.0" value="0.05" id="crstl_radius_min">
-				<label for="crstl_radius_max">Max</label>
-				<input type="number" min="0.01" max="10.0" value="2.00" id="crstl_radius_max">		
-			</div>
+				<td>Worms radius:</td>
+				<td>
+					<label for="wrm_radius_min">Min</label>
+					<input type="number" min="0.01" max="10.0" value="0.05" id="wrm_radius_min">
+				</td>				
+				<td>
+					<label for="wrm_radius_max">Max</label>
+					<input type="number" min="0.01" max="10.0" value="3.00" id="wrm_radius_max">					
+				</td>
 
-			<div class="sml">
-				Crystals total length: 
-				<label for="crstl_total_length_min">Min</label>
-				<input type="number" min="1" max="100" value="10" id="crstl_total_length_min">
-				<label for="crstl_total_length_max">Max</label>
-				<input type="number" min="1" max="100" value="30" id="crstl_total_length_max">		
-			</div>
+			</tr>
 
-			<div class="sml">
-				Lasers length: 
-				<label for="lsr_length_min">Min</label>
-				<input type="number" min="1" max="200" value="30" id="lsr_length_min">
-				<label for="lsr_length_max">Max</label>
-				<input type="number" min="1" max="200" value="50" id="lsr_length_max">		
-			</div>
+			<tr>
+				<td>Worms lifetime:</td>
+				<td>
+					<label for="wrm_lifetime_min">Min</label>
+					<input type="number" min="1" max="200" value="25" id="wrm_lifetime_min">
+				</td>
+				<td>
+					<label for="wrm_lifetime_max">Max</label>
+					<input type="number" min="1" max="200" value="50" id="wrm_lifetime_max">		
+				</td>
 
-			<div class="sml">
-				Lasers thickness: 
-				<label for="lsr_thickness_min">Min</label>
-				<input type="number" min="1" max="20" value="1" id="lsr_thickness_min">
-				<label for="lsr_thickness_max">Max</label>
-				<input type="number" min="1" max="20" value="3" id="lsr_thickness_max">		
-			</div>
+			</tr>
 
-			<div class="sml">
-				Bullets radius:
-				<label for="blt_radius_min">Min</label>
-				<input type="number" min="0.01" max="10.0" value="0.05" id="blt_radius_min">
-				<label for="blt_radius_max">Max</label>
-				<input type="number" min="0.01" max="10.0" value="3.00" id="blt_radius_max">		
-			</div>
+			<tr>
+				<td>Crystals radius:</td>
+				<td>
+					<label for="crstl_radius_min">Min</label>
+					<input type="number" min="0.01" max="10.0" value="0.05" id="crstl_radius_min">
+				</td>
+				<td>
+					<label for="crstl_radius_max">Max</label>
+					<input type="number" min="0.01" max="10.0" value="2.00" id="crstl_radius_max">		
+				</td>
 
-			<div class="sml">
-				Boxes width & height limits:
-				<label for="bx_wh_min">Min</label>
-				<input type="number" min="1" max="50" value="2" id="bx_wh_min">
-				<label for="bx_wh_max">Max</label>
-				<input type="number" min="1" max="50" value="8" id="bx_wh_max">		
-			</div>
+			</tr>
+
+			<tr>
+				<td>Crystals total length: </td>
+				<td>
+					<label for="crstl_total_length_min">Min</label>
+					<input type="number" min="1" max="100" value="10" id="crstl_total_length_min">
+				</td>
+				<td>
+					<label for="crstl_total_length_max">Max</label>
+					<input type="number" min="1" max="100" value="30" id="crstl_total_length_max">		
+				</td>
+
+			</tr>
+
+			<tr>
+				<td>Lasers length: </td>
+				<td>
+					<label for="lsr_length_min">Min</label>
+					<input type="number" min="1" max="200" value="30" id="lsr_length_min">
+				</td>
+				<td>
+					<label for="lsr_length_max">Max</label>
+					<input type="number" min="1" max="200" value="50" id="lsr_length_max">		
+				</td>
+
+			</tr>
+
+			<tr>
+				<td>Lasers thickness: </td>
+				<td>
+					<label for="lsr_thickness_min">Min</label>
+					<input type="number" min="1" max="20" value="1" id="lsr_thickness_min">
+				</td>
+				<td>
+					<label for="lsr_thickness_max">Max</label>
+					<input type="number" min="1" max="20" value="3" id="lsr_thickness_max">		
+				</td>
+
+			</tr>
+
+			<tr>
+				<td>Bullets radius:</td>
+				<td>
+					<label for="blt_radius_min">Min</label>
+					<input type="number" min="0.01" max="10.0" value="0.05" id="blt_radius_min">
+				</td>
+				<td>
+					<label for="blt_radius_max">Max</label>
+					<input type="number" min="0.01" max="10.0" value="3.00" id="blt_radius_max">		
+				</td>
+
+			</tr>
+
+			<tr>
+				<td>Boxes width & height limits:</td>
+				<td>
+					<label for="bx_wh_min">Min</label>
+					<input type="number" min="1" max="50" value="2" id="bx_wh_min">
+				</td>
+				<td>
+					<label for="bx_wh_max">Max</label>
+					<input type="number" min="1" max="50" value="8" id="bx_wh_max">		
+				</td>
+
+			</tr>
+
+			</table>
 
 		</div>
 

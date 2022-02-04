@@ -16,11 +16,9 @@ function from_polar(v, alpha) {
 function clamp_value(value, min, max) {
     return ((value < min) ? min : ((value > max) ? max : value));
 }
-function calculate_canvas_size(window_width, window_heigh) {
-    return ((window_width > window_heigh) ? window_heigh : window_width) * 0.80;
-}
 ;
-const particles_count = 200;
+//for each 500x500 pixels area, there will be 200 particles
+const particles_count = Math.floor(((window.innerWidth * window.innerHeight) / (500 * 500)) * 200);
 const color_palettes = [
     ["#247BA0", "#70C1B3", "#B2DBBF", "#F3FFBD", "#FF1654"],
     ["#6A0136", "#BFAB25", "#B81365", "#026C7C", "#055864"],
@@ -29,9 +27,6 @@ const color_palettes = [
     ["#2E1F27", "#854D27", "#DD7230", "#F4C95D", "#E7E393"]
 ];
 ;
-// const enum filling_modes{
-// 	Auto, Manual
-// };
 function parse_filling_style(value) {
     switch (value) {
         case "worms":
@@ -57,7 +52,6 @@ let new_filling_style = 0;
 let filling_style_changed = false;
 let runtime_paused = false;
 let runtime_reset = false;
-// let current_filling_mode = filling_modes.Auto;
 let refresh_rate = 1000 / 50;
 let ms_elapsed = 0;
 let current_color_palette_id = 0;
@@ -440,13 +434,6 @@ function save_png_btn_click_callback() {
     save_link.setAttribute("href", art_canvas.toDataURL("image/png").replace("image/png", "image/octet-stream"));
     save_link.click();
 }
-// function filling_mode_changed_callback(e:any){
-// 	if(e.target.id === "fmauto"){
-// 		current_filling_mode = filling_modes.Auto;
-// 	}else if(e.target.id === "fmmanual"){
-// 		current_filling_mode = filling_modes.Manual;
-// 	}
-// }
 function render_speed_change_callback() {
     refresh_rate = Math.floor(1000 / (Number(document.getElementById("render_speed").value)));
     ms_elapsed = 0;
@@ -469,11 +456,8 @@ function show_hide_options_btn_click_callback() {
     }
 }
 function init_app() {
-    const canvas_side_size = calculate_canvas_size(window.innerWidth, window.innerHeight);
-    const width = canvas_side_size;
-    const height = canvas_side_size;
-    // const update_rate = 50
-    // const frame_rate = 50
+    const width = window.innerWidth;
+    const height = window.innerHeight;
     const canvas = document.createElement("canvas");
     canvas.setAttribute("id", "art_canvas");
     document.body.appendChild(canvas);
@@ -498,10 +482,6 @@ function init_app() {
     reset_btn.addEventListener("click", reset_btn_click_callback);
     const save_png_btn = document.getElementById("save_png_btn");
     save_png_btn.addEventListener("click", save_png_btn_click_callback);
-    // const fmauto = document.getElementById("fmauto") as HTMLInputElement;
-    // fmauto.addEventListener("change", filling_mode_changed_callback);
-    // const fmmanual = document.getElementById("fmmanual") as HTMLInputElement;
-    // fmmanual.addEventListener("change", filling_mode_changed_callback);
     const render_speed = document.getElementById("render_speed");
     render_speed.addEventListener("change", render_speed_change_callback);
     render_speed.addEventListener("input", render_speed_change_callback);

@@ -20,17 +20,15 @@ function clamp_value(value:number, min:number, max:number):number{
 	return ((value < min) ? min : ((value > max) ? max: value));
 }
 
-function calculate_canvas_size(window_width:number, window_heigh:number):number{
-	return ((window_width > window_heigh) ? window_heigh : window_width) * 0.80;
-}
-
 interface SimObject{
 	update():void;
 	draw(ctx:CanvasRenderingContext2D):void;
 	change_palette(palette:string[]):void;
 };
 
-const particles_count = 200;
+//for each 500x500 pixels area, there will be 200 particles
+const particles_count = Math.floor(((window.innerWidth * window.innerHeight) / (500*500)) * 200);
+
 
 const color_palettes = [
 	["#247BA0","#70C1B3","#B2DBBF","#F3FFBD","#FF1654"],
@@ -43,10 +41,6 @@ const color_palettes = [
 const enum filling_styles{
 	Worms, Crystals, Lasers, Bullets, Boxes
 };
-
-// const enum filling_modes{
-// 	Auto, Manual
-// };
 
 function parse_filling_style(value:string):number{
 	
@@ -83,8 +77,6 @@ let filling_style_changed = false;
 
 let runtime_paused = false;
 let runtime_reset = false;
-
-// let current_filling_mode = filling_modes.Auto;
 
 let refresh_rate = 1000/50;
 let ms_elapsed = 0;
@@ -574,14 +566,6 @@ function save_png_btn_click_callback(){
 	save_link.click();
 }
 
-// function filling_mode_changed_callback(e:any){
-// 	if(e.target.id === "fmauto"){
-// 		current_filling_mode = filling_modes.Auto;
-// 	}else if(e.target.id === "fmmanual"){
-// 		current_filling_mode = filling_modes.Manual;
-// 	}
-// }
-
 function render_speed_change_callback(){
 	refresh_rate =  Math.floor(1000/(Number((document.getElementById("render_speed") as HTMLInputElement).value)));
 	ms_elapsed = 0;
@@ -607,12 +591,8 @@ function show_hide_options_btn_click_callback(){
 
 function init_app(){
 
-	const canvas_side_size = calculate_canvas_size(window.innerWidth, window.innerHeight);
-	const width = canvas_side_size;
-	const height = canvas_side_size;
-
-	// const update_rate = 50
-	// const frame_rate = 50
+	const width = window.innerWidth;
+	const height = window.innerHeight;
 
 	const canvas = document.createElement("canvas");
 	canvas.setAttribute("id", "art_canvas");
@@ -647,12 +627,6 @@ function init_app(){
 	const save_png_btn = document.getElementById("save_png_btn") as HTMLButtonElement;
     save_png_btn.addEventListener("click", save_png_btn_click_callback);
 
-	// const fmauto = document.getElementById("fmauto") as HTMLInputElement;
-	// fmauto.addEventListener("change", filling_mode_changed_callback);
-
-	// const fmmanual = document.getElementById("fmmanual") as HTMLInputElement;
-	// fmmanual.addEventListener("change", filling_mode_changed_callback);
-
 	const render_speed = document.getElementById("render_speed") as HTMLInputElement;
 	render_speed.addEventListener("change", render_speed_change_callback);
 	render_speed.addEventListener("input", render_speed_change_callback);
@@ -673,8 +647,6 @@ function init_app(){
 
 	const show_hide_options_btn = document.getElementById("show_hide_options_btn") as HTMLButtonElement;
     show_hide_options_btn.addEventListener("click", show_hide_options_btn_click_callback);
-
-
 
 }
 
